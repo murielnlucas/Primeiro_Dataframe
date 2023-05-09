@@ -20,3 +20,19 @@ display(Vendas[["Produto", "Valor Unitário"]])
 
 #Retorna como true ou false a condição especificada
 display (Vendas[Vendas["Valor Unitário"]<50])
+
+#Criando uma nova coluna com base em outras colunas 
+Vendas["Comissao"] = Vendas["Valor Final"] * 0.05
+
+display (Vendas)
+
+#Cria um novo DataFrame
+Faturamento = pd.DataFrame()
+
+Faturamento["Filial"] = Vendas["ID Loja"]
+
+Faturamento["Vendas"] = Vendas["Valor Final"]
+
+imprime = Faturamento.groupby(["Filial"]).agg({"Vendas":['sum']})
+
+display(imprime)

@@ -1,5 +1,6 @@
 #Importar as bibliotecas necessárias
 import pandas as pd
+import matplotlib.pyplot as plt
 # as bibliotecas referentes ao Drive e ao Colab
 from google.colab import auth
 from googleapiclient.discovery import build
@@ -52,3 +53,8 @@ Prod_Loja = Vendas.pivot_table(Vendas, index=['ID Loja', 'Produto'], columns=Non
 #Gera relação de vendas Loja X Data
 Data_Loja = Vendas.pivot_table(Vendas, index=['ID Loja', 'Data'], columns=None, aggfunc='sum', dropna=True, margins=False)
 
+
+#Agrupando as vendas com base no código de venda
+#Vendas = Vendas.groupby(['Código Venda', 'Data', 'ID Loja', 'Produto', 'Quantidade', 'Valor Unitário', 'Valor Final'])['Quantidade'].sum()
+
+display(Vendas)

@@ -34,7 +34,21 @@ Vendas.drop_duplicates(subset=None, keep='first', inplace=True)
 #Excluir o que está vazio 
 VendasFinal = Vendas.dropna(axis=0, how="any", inplace=False)
 
-#Agrupando as vendas 
+#Iniciando a análise 
 
-VendasFinal.groupby(['Código Venda', 'Data', 'ID Loja', 'Produto', 'Quantidade'])['Valor Final'].sum()
+TotalVendas = Vendas['Valor Final'].sum()
+TotalVendasLoja = Vendas.groupby(['ID Loja'])['Valor Final'].sum()
+TotalVendasData = Vendas.groupby(['Data'])['Valor Final'].sum()
+TotalVendasProduto = Vendas.groupby(['Produto'])['Valor Final'].sum()
+
+display("Total de Vendas:" , TotalVendas)
+display("Total de Vendas por loja:" , TotalVendasLoja)
+display("Total de Vendas por data:" , TotalVendasData)
+display("Total de Vendas por produto:" , TotalVendasProduto)
+
+#Gera relação de vendas produto X filial
+Prod_Loja = Vendas.pivot_table(Vendas, index=['ID Loja', 'Produto'], columns=None, aggfunc='sum', dropna=True, margins=False)
+
+#Gera relação de vendas Loja X Data
+Data_Loja = Vendas.pivot_table(Vendas, index=['ID Loja', 'Data'], columns=None, aggfunc='sum', dropna=True, margins=False)
 
